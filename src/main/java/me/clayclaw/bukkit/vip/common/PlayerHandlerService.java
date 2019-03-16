@@ -62,14 +62,14 @@ public class PlayerHandlerService implements IService {
         VIPlayer vp = getVIPlayer(player);
         ConfigOption.VIPGroupOption go = ClawVIP.getConfigOption().getGroupOption().get(targetGroup);
 
-        vp.setOriginalGroup(
-                ClawVIP.getPAPIConvertedString(ClawVIP.getConfigOption().getVipDefaultGroup(), vp.getPlayer()));
+        vp.setOriginalGroup((!Objects.isNull(ClawVIP.getConfigOption().getVipGroupPlaceholder()) ?
+                ClawVIP.getPAPIConvertedString(ClawVIP.getConfigOption().getVipGroupPlaceholder(), player):""));
 
         if(Objects.isNull(vp.getGroupName())){
             vp.setGroupName(targetGroup);
         }else{
             int priority = ClawVIP.getConfigOption().getGroupOption().get(vp.getGroupName()).getPriority();
-            if(priority <= go.getPriority()){
+            if(priority < go.getPriority()){
                 vp.setGroupName(targetGroup);
             }else{
                 player.sendMessage(ClawVIP.getLanguageString("LowPriority"));
@@ -80,7 +80,11 @@ public class PlayerHandlerService implements IService {
         if (isPermanent){
             vp.setDueDate(null);
         } else if(vp.getDueDate() == null){
-            vp.setDueDate(DateUtils.addDays(new Date(), dayAmount));
+            if(vp.getGroupName() != null){
+                vp.setDueDate(DateUtils.addDays(new Date(), dayAmount));
+            }else{
+                vp.setDueDate(null);
+            }
         } else {
             vp.setDueDate(DateUtils.addDays(vp.getDueDate(), dayAmount));
         }

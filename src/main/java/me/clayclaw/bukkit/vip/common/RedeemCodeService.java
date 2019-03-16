@@ -57,6 +57,7 @@ public class RedeemCodeService implements IService {
             player.sendMessage(ChatColor.RED + "[ClawVIP] 使用序号失败，此序号没有找到相关VIP组");
             return;
         }
+
         boolean isPermanent = ko.getDays() == -1;
 
         if(playerService.updateVIP(player, targetGroup, isPermanent, ko.getDays())){
