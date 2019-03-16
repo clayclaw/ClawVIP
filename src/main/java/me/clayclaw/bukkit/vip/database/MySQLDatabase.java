@@ -36,10 +36,12 @@ public class MySQLDatabase implements IDatabase {
                                 " (Id VARCHAR(100),DueDate DATETIME,GroupName VARCHAR(100),OriginalGroup VARCHAR(100)" +
                                 ",PRIMARY KEY (Id))");
                 ps1.executeUpdate();
+                ps1.close();
                 PreparedStatement ps2 = getConnection().prepareStatement(
                         "CREATE TABLE IF NOT EXISTS " + DatabaseService.DB_KEYDATA_TABLE_NAME +
                                 " (VKey VARCHAR(100),KeyGroup VARCHAR(100),PRIMARY KEY (VKey))");
                 ps2.executeUpdate();
+                ps2.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -77,6 +79,7 @@ public class MySQLDatabase implements IDatabase {
                     pojo.setOriginalGroup(rs.getString("OriginalGroup"));
                     return pojo;
                 }
+                ps.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -92,6 +95,7 @@ public class MySQLDatabase implements IDatabase {
                     pojo.setKeyGroup(rs.getString("KeyGroup"));
                     return pojo;
                 }
+                ps.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -114,6 +118,7 @@ public class MySQLDatabase implements IDatabase {
                 ps.setString(3, pojo.getVipGroup());
                 ps.setString(4, pojo.getOriginalGroup());
                 ps.executeUpdate();
+                ps.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -127,6 +132,7 @@ public class MySQLDatabase implements IDatabase {
                 ps.setString(1, pojo.getKey());
                 ps.setString(2, pojo.getKeyGroup());
                 ps.executeUpdate();
+                ps.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -141,6 +147,7 @@ public class MySQLDatabase implements IDatabase {
                         "DELETE FROM " + DatabaseService.DB_PLAYERDATA_TABLE_NAME + " WHERE Id = ?");
                 ps.setString(1, key);
                 ps.executeUpdate();
+                ps.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -150,6 +157,7 @@ public class MySQLDatabase implements IDatabase {
                         "DELETE FROM " + DatabaseService.DB_KEYDATA_TABLE_NAME + " WHERE VKey = ?");
                 ps.setString(1, key);
                 ps.executeUpdate();
+                ps.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }

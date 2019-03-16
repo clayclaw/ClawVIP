@@ -94,10 +94,8 @@ public class ClawVIP extends JavaPlugin {
                 try {
                     Reader defConfigStream =
                             new InputStreamReader(getResource("zh_CN.yml"), "UTF-8");
-                    if (defConfigStream != null) {
-                        YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
-                        langConfig.setDefaults(defConfig);
-                    }
+                    YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
+                    langConfig.setDefaults(defConfig);
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
