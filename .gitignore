@@ -1,0 +1,22 @@
+### MacOS
+.DS_Store/
+
+### Intellij
+.idea/
+*.iml
+*.iws
+*.ipr
+
+### Eclipse
+.classpath
+.project
+.settings/
+
+### Gradle
+.gradle/
+build/
+
+### Java
+*.class
+*.log
+hs_err_pid*

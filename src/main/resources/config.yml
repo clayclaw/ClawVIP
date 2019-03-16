@@ -1,0 +1,102 @@
+# 插件基础选项
+Option:
+  # 语言设定(填写ClawVIP/lang文件夹中的文件名)
+  Language: zh_CN
+  # 是否开启UUID储存模式
+  UUIDMode: false
+  # 储存方式，目前仅能选择MySQL
+  Saving: MySQL
+  # 日期格式
+  DateFormat: 'yyyy-MM-dd hh:mm:ss'
+
+# MySQL设定(只有选用了MySQL储存方式才需要设置)
+MySQL:
+  # MySQL地址
+  host: localhost
+  # MySQL端口
+  port: 3306
+  # MySQL资料库
+  database: minecraft
+  # MySQL用户名
+  username: test
+  # MySQL密码
+  password: 123
+
+# 序号设定
+RedeemCode:
+  # 序号长度
+  Length: 10
+  # 序号字串组合
+  Involved: ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890
+  # 序号设定
+  Gifts:
+    # 设定可以换3天VIP1组的序号
+    # 生成序号: /cvip newkey A
+    A:
+      # 这里填你在下面设置的VIP用户组
+      VIPGroup: 'VIP1'
+      # 时间长度，-1代表永久
+      days: 3
+    # 设定可以换永久VIP2组的序号
+    # 生成序号: /cvip newkey B
+    B:
+      VIPGroup: 'VIP2'
+      days: -1
+
+#VIP相关设定
+VIP:
+  # 普通玩家权限组名称 尊贵会员期限结束后会返回到这权限组
+  # 如果你需要过期的玩家在到期的时候返回没有vip时的组请填写#nochange并且设定下面获取玩家权限组的Placeholder
+  DefaultGroup: '#nochange'
+  # 获取玩家权限组的Placeholder
+  GroupPlaceholder: '%vault_rank%'
+  # 命令设定
+  # 请根据自己的权限管理插件配置以下命令项目
+  # %player% 是玩家名称
+  # %perm% 是相关权限
+  # %group% 是相关权限组
+  # 以上变量不适用于OnActive与OnExpire设定中
+  # 预设为GroupManager的命令
+  Command:
+    # 权限管理插件的移动权限组命令，可用变量: %player%与%group%
+    MoveGroup: 'manuadd %player% %group%'
+    # 权限管理插件的增加权限命令，可用变量: %player%、%perm%
+    AddPerm: 'manuaddp %player% %perm%'
+    # 权限管理插件的删除权限命令，可用变量: %player%、%perm%
+    DelPerm: 'manudelp %player% %perm%'
+    # 当玩家升级到尊贵用户组时附加执行的命令
+    # 可添加多个命令 支持PAPI变量
+    # 金钱、点卷、礼包都能配合不同插件用命令发放
+    OnActivate:
+      - 'say 玩家%player_name%开通了尊贵用户组，可享有不同的待遇福利！'
+    # 当玩家的尊贵用户组过期时附加执行的命令
+    # 可添加多个命令 支持PAPI变量
+    OnExpire:
+      - 'say 玩家%player_name%的尊贵用户组已过期，拥有的福利加持已消失！'
+  # VIP组设定
+  Group:
+    # 一个叫VIP1的VIP组
+    VIP1:
+      # 这个VIP组友善的名字 用于展示
+      FriendlyName: '&6尊贵玩家1级'
+      # 移动到此尊贵用户组时是否同时移动权限组
+      MovePermGroup: true
+      # 移动到的目标权限组
+      PermGroup: 'vip1'
+      # 在VIP期间额外得到的权限
+      ExtraPerm:
+        - vip.fly
+        - vip.tp
+      # 尊贵用户组优先度
+      # 低优先度的玩家可以升级为更高优先度的尊贵用户组
+      # 但是高优先度的尊贵用户组不能降级到低优先度的尊贵用户组
+      # 此功能可制作VIP等级制度
+      Priority: 0
+    VIP2:
+      FriendlyName: '&6尊贵玩家2级'
+      MovePermGroup: true
+      PermGroup: 'vip2'
+      ExtraPerm:
+        - vip.fly
+        - vip.tp
+      Priority: 1
