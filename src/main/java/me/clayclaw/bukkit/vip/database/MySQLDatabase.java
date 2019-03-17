@@ -25,11 +25,13 @@ public class MySQLDatabase implements IDatabase {
                         "jdbc:mysql://" + host + ":" + port + "/" + database, username, password);
                 Bukkit.getLogger().info(ChatColor.GREEN + "[ClawVIP] 正在开启对SQL的连接");
             } catch (SQLException e) {
-                e.printStackTrace();
-                Bukkit.getLogger().info(ChatColor.RED + "[ClawVIP] 开启SQL连接失败");
+                // e.printStackTrace();
+                Bukkit.getLogger().warning(ChatColor.RED + "[ClawVIP] SQL连接失败");
+                Bukkit.getLogger().warning(ChatColor.RED + "[ClawVIP] 请确保SQL连线设置正确");
             }
         }
         Bukkit.getScheduler().runTaskLater(ClawVIP.getInstance(), () -> {
+            if(!isConnected()) return;
             try {
                 PreparedStatement ps1 = getConnection().prepareStatement(
                         "CREATE TABLE IF NOT EXISTS " + DatabaseService.DB_PLAYERDATA_TABLE_NAME +

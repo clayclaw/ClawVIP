@@ -1,0 +1,33 @@
+CommandHelp:
+  - '&8[============&5【&6ClawVIP指令幫助&5】&8============]'
+  - '&8/cvip help &f- &6查看ClawVIP指令幫助'
+  - '&8/cvip info &f- &6查看ClawVIP插件資訊'
+  - '&8/cvip list &f- &6查看在線VIP玩家'
+  - '&8/cvip self &f- &6查看自己的VIP資訊'
+  - '&8/cvip look <玩家名稱> &f- &6查看其他玩家VIP資訊'
+  - '&8/cvip redeem <序號> &f- &6使用序號'
+  - '&8/cvip newkey <序號設定名稱> &f- &6生成一個序號'
+  - '&8/cvip remove <玩家名稱> &f- &6移除指定玩家的VIP用戶組'
+  - '&8/cvip give <玩家名稱> <VIP用戶組> <給予時間(按日計算)> &f- &6將指定玩家提升至指定VIP用戶組'
+  - '&8/cvip reload &f- &6重新載入設定檔案'
+# 此語句支持PlaceholderAPI
+CommandSelf:
+  - '&8====================================='
+  - '&8您的尊貴會員組: &6%vip_groupname%'
+  - '&8您的尊貴會員到期時間: &6%vip_duedate%'
+  - '&8您的點數: &6%playerpoints_points%'
+  - '&8您的金錢: &6%vault_eco_balance%'
+  - '&6加入VIP會員享有多項特權'
+  - '&8====================================='
+# 此語句支持PlaceholderAPI
+CommandLook:
+  - '&8====================================='
+  - '&8尊貴會員組: &6%vip_groupname%'
+  - '&8尊貴會員到期時間: &6%vip_duedate%'
+  - '&8點卷數量: &6%playerpoints_points%'
+  - '&8金錢: &6%vault_eco_balance%'
+  - '&8====================================='
+LowPriority: '&c[ClawVIP] 您不能取得更低等級的VIP'
+RedeemSuccess: '&6[ClawVIP] 您成功使用序號並獲得VIP'
+HelpReminder: '&6[ClawVIP] 輸入/cvip help查看資訊'
+NoPermission: '&c[ClawVIP] 你沒有權限使用此指令'

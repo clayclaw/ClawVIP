@@ -91,25 +91,7 @@ public class ClawVIP extends JavaPlugin {
         langConfig = YamlConfiguration.loadConfiguration(langConfigFile);
         if (!langConfigFile.exists()) {
             if(configOption.getLanguage().equals("zh_CN")) {
-                try {
-                    Reader defConfigStream =
-                            new InputStreamReader(getResource("zh_CN.yml"), "UTF-8");
-                    YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
-                    langConfig.setDefaults(defConfig);
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
-                langConfig.options().copyDefaults(true);
-                try {
-                    if(!reload){
-                        langConfig.save(langConfigFile);
-                    }else{
-                        langConfig.load(langConfigFile);
-                    }
-                } catch (IOException | InvalidConfigurationException e) {
-                    e.printStackTrace();
-                }
-
+                loadLangConfig("zh_CN", reload);
                 getServer().getLogger().info(ChatColor.GREEN + "创建语言文档 zh_CN");
             }else{
                 getServer().getLogger().severe(ChatColor.RED + "缺乏语言文档: " + configOption.getLanguage());
@@ -119,6 +101,27 @@ public class ClawVIP extends JavaPlugin {
         try {
             langConfig.save(langConfigFile);
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadLangConfig(String lang, boolean reload){
+        try {
+            Reader defConfigStream =
+                    new InputStreamReader(getResource(lang+".yml"), "UTF-8");
+            YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
+            langConfig.setDefaults(defConfig);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        langConfig.options().copyDefaults(true);
+        try {
+            if(!reload){
+                langConfig.save(langConfigFile);
+            }else{
+                langConfig.load(langConfigFile);
+            }
+        } catch (IOException | InvalidConfigurationException e) {
             e.printStackTrace();
         }
     }
