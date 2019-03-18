@@ -13,8 +13,8 @@ import java.sql.Connection;
 public class ClawVIPAPI {
 
     /**
-     * 生成一个VIP序号
-     * @param group 尊贵用户组的ID
+     * Generate a redeem code
+     * @param group Key Group Id
      */
     public static String generateRedeemCode(String group) {
         return ((RedeemCodeService) ClawVIP.getInstance().getServiceManager()
@@ -23,8 +23,7 @@ public class ClawVIPAPI {
     }
 
     /**
-     * 检查玩家是否VIP
-     * @param player 玩家
+     * @return weather the player is vip or not
      */
     public static boolean isVIP(Player player) {
         return ((PlayerHandlerService) ClawVIP.getInstance().getServiceManager()
@@ -33,8 +32,8 @@ public class ClawVIPAPI {
     }
 
     /***
-     * 获取VIP玩家身处的VIP用户组
-     * 如果不是VIP玩家则会传回 null
+     * @return player VIP GroupID,
+     * @return null if the player is not VIP
      */
     public static String getVIPGroup(Player player) {
         return ((PlayerHandlerService) ClawVIP.getInstance().getServiceManager()
@@ -44,8 +43,7 @@ public class ClawVIPAPI {
     }
 
     /***
-     * 取得玩家VIP用户组到期日
-     * 如果不是VIP玩家则会传回 null
+     * @return due date or null if the player is not VIP or the player is permanent VIP
      */
     public static Date getVIPDueDate(Player player){
         return ((PlayerHandlerService) ClawVIP.getInstance().getServiceManager()
@@ -55,7 +53,7 @@ public class ClawVIPAPI {
     }
 
     /***
-     * 删除玩家的VIP
+     * remove VIP
      */
     public static void removeVIP(Player player){
         ((PlayerHandlerService) ClawVIP.getInstance().getServiceManager()
@@ -65,8 +63,7 @@ public class ClawVIPAPI {
     }
 
     /***
-     * 替玩家使用序号
-     * @param key 序号
+     * redeem for player
      */
     public static void tryToRedeem(Player player, String key){
         ((RedeemCodeService) ClawVIP.getInstance().getServiceManager()
@@ -74,14 +71,14 @@ public class ClawVIPAPI {
     }
 
     /***
-     * 获取玩家Id
+     * @return player Id
      */
     public static String getId(Player player){
         return (ClawVIP.getConfigOption().isUUIDMode()) ? player.getUniqueId().toString() : player.getName();
     }
 
     /***
-     * 给予玩家VIP
+     * @return success or not
      */
     public static boolean giveVIP(Player player, String group, int days){
         return ((PlayerHandlerService) ClawVIP.getInstance().getServiceManager()
@@ -89,7 +86,7 @@ public class ClawVIPAPI {
     }
 
     /***
-     * 获取所有在线的VIP
+     * @return online VIP players
      */
     public static Set<Player> getVIPOnline(){
         return ((PlayerHandlerService) ClawVIP.getInstance().getServiceManager()
@@ -97,7 +94,7 @@ public class ClawVIPAPI {
     }
 
     /***
-     * 获取MySQL Connection
+     * @return MySQL Connection
      */
     public static Connection getConnection(){
         return ((MySQLDatabase)((DatabaseService) ClawVIP.getInstance().getServiceManager()

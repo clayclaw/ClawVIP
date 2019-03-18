@@ -1,10 +1,10 @@
 package me.clayclaw.bukkit.vip.database;
 
+import me.clayclaw.bukkit.vip.BuiltinMessage;
 import me.clayclaw.bukkit.vip.ClawVIP;
 import me.clayclaw.bukkit.vip.database.pojo.DatabaseKeyDataPOJO;
 import me.clayclaw.bukkit.vip.database.pojo.DatabasePlayerDataPOJO;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 
 import java.sql.*;
 
@@ -23,11 +23,10 @@ public class MySQLDatabase implements IDatabase {
             try {
                 connection = DriverManager.getConnection(
                         "jdbc:mysql://" + host + ":" + port + "/" + database, username, password);
-                Bukkit.getLogger().info(ChatColor.GREEN + "[ClawVIP] 正在开启对SQL的连接");
+                Bukkit.getLogger().info(BuiltinMessage.getMessage("CONNECTINGTOMYSQL"));
             } catch (SQLException e) {
                 // e.printStackTrace();
-                Bukkit.getLogger().warning(ChatColor.RED + "[ClawVIP] SQL连接失败");
-                Bukkit.getLogger().warning(ChatColor.RED + "[ClawVIP] 请确保SQL连线设置正确");
+                Bukkit.getLogger().warning(BuiltinMessage.getMessage("CONNECTFAILED"));
             }
         }
         Bukkit.getScheduler().runTaskLater(ClawVIP.getInstance(), () -> {
@@ -56,10 +55,10 @@ public class MySQLDatabase implements IDatabase {
         if (isConnected()) {
             try {
                 connection.close();
-                Bukkit.getLogger().info(ChatColor.GREEN + "[ClawVIP] 正在关闭对SQL的连接");
+                Bukkit.getLogger().info(BuiltinMessage.getMessage("TRYINGTODISCONNECT"));
             } catch (SQLException e) {
                 e.printStackTrace();
-                Bukkit.getLogger().info(ChatColor.RED + "[ClawVIP] 关闭SQL连接失败");
+                Bukkit.getLogger().info(BuiltinMessage.getMessage("FAILEDTODISCONNECT"));
             }
         }
     }

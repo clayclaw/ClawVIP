@@ -1,7 +1,7 @@
 package me.clayclaw.bukkit.vip;
 
+import me.clayclaw.bukkit.vip.bridge.PlaceholderService;
 import me.clayclaw.bukkit.vip.bstats.Metrics;
-import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -24,11 +24,14 @@ public class ClawVIP extends JavaPlugin {
     private File langConfigFile;
     private static FileConfiguration langConfig;
 
+    public static String language;
+
     @Override
     public void onEnable() {
         instance = this;
 
         initConfig(false);
+        initLanguage();
 
         serviceManager = new ServiceManager();
         serviceManager.enable();
@@ -42,9 +45,13 @@ public class ClawVIP extends JavaPlugin {
                     " | |    | |/ _` \\ \\ /\\ / /\\ \\/ /   | | |  ___/ \n" +
                     " | |____| | (_| |\\ V  V /  \\  /   _| |_| |     \n" +
                     "  \\_____|_|\\__,_| \\_/\\_/    \\/   |_____|_|     ");
-            getServer().getLogger().info("      插件开发者: ClayClaw");
-            getServer().getLogger().info(ChatColor.GREEN + "ClawVIP已成功载入，感谢你的使用！");
+            getServer().getLogger().info(ChatColor.GOLD + "      by ClayClaw");
+            getServer().getLogger().info(BuiltinMessage.getMessage("WELCOME"));
         },1);
+    }
+
+    public void initLanguage(){
+        language = (ClawVIP.getConfigOption().getLanguage().equals("zh_TW")) ? "zh_TW" : "zh_CN";
     }
 
     @Override
@@ -92,9 +99,16 @@ public class ClawVIP extends JavaPlugin {
         if (!langConfigFile.exists()) {
             if(configOption.getLanguage().equals("zh_CN")) {
                 loadLangConfig("zh_CN", reload);
-                getServer().getLogger().info(ChatColor.GREEN + "创建语言文档 zh_CN");
+                getServer().getLogger().info(BuiltinMessage.getMessage("CREATELANGFILE") + " zh_CN");
+            }else if(configOption.getLanguage().equalsIgnoreCase("zh_TW")) {
+                loadLangConfig("zh_TW", reload);
+                getServer().getLogger().info(BuiltinMessage.getMessage("CREATELANGFILE") + " zh_TW");
+            }else if(configOption.getLanguage().equalsIgnoreCase("en_US")){
+                loadLangConfig("zh_TW", reload);
+                getServer().getLogger().info(BuiltinMessage.getMessage("CREATELANGFILE") + " en_US");
             }else{
-                getServer().getLogger().severe(ChatColor.RED + "缺乏语言文档: " + configOption.getLanguage());
+                getServer().getLogger().severe(BuiltinMessage.getMessage("FILENOTFOUND")
+                        + configOption.getLanguage());
             }
         }
         langConfig = YamlConfiguration.loadConfiguration(langConfigFile);
@@ -111,11 +125,8 @@ public class ClawVIP extends JavaPlugin {
                     new InputStreamReader(getResource(lang+".yml"), "UTF-8");
             YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
             langConfig.setDefaults(defConfig);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        langConfig.options().copyDefaults(true);
-        try {
+            defConfigStream.close();
+            langConfig.options().copyDefaults(true);
             if(!reload){
                 langConfig.save(langConfigFile);
             }else{
@@ -127,7 +138,7 @@ public class ClawVIP extends JavaPlugin {
     }
 
     public static String getPAPIConvertedString(String s, Player p) {
-        return ChatColor.translateAlternateColorCodes('&', PlaceholderAPI.setPlaceholders(p, s));
+        return PlaceholderService.getPAPIConvertedString(s, p);
     }
 
     public static List<String> getPAPIConvertedStringList(List<String> sl, Player p) {
@@ -139,13 +150,13 @@ public class ClawVIP extends JavaPlugin {
     public static String getLanguageString(String langNode) {
         return (!Objects.isNull(langConfig.getString(langNode)))
                 ? ChatColor.translateAlternateColorCodes('&',langConfig.getString(langNode))
-                : "语言文件缺漏字串: " + langNode;
+                : BuiltinMessage.getMessage("STRNOTFOUND") + langNode;
     }
 
     public static List<String> getLanguageStringList(String langNode) {
         return (!Objects.isNull(langConfig.getStringList(langNode)))
                 ? ClawLib.convertColorCodeList(langConfig.getStringList(langNode))
-                : Arrays.asList("语言文件缺漏字串列: " + langNode);
+                : Arrays.asList(BuiltinMessage.getMessage("STRLISTNOTFOUND") + langNode);
     }
 
     public static ConfigOption getConfigOption() {

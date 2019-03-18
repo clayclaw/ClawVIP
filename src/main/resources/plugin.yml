@@ -1,7 +1,8 @@
 name: ClawVIP
 main: me.clayclaw.bukkit.vip.ClawVIP
-version: 0.0.2
-depend: [PlaceholderAPI]
+version: 1.21
+author: ClayClaw
+softdepend: [PlaceholderAPI]
 commands:
   cvip:
-    description: "ClawVIP核心命令"
+    description: "ClawVIP core command"

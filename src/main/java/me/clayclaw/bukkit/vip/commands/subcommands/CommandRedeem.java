@@ -1,9 +1,8 @@
 package me.clayclaw.bukkit.vip.commands.subcommands;
 
-
+import me.clayclaw.bukkit.vip.BuiltinMessage;
 import me.clayclaw.bukkit.vip.ClawVIPAPI;
 import me.clayclaw.bukkit.vip.commands.ICommand;
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -33,7 +32,7 @@ public class CommandRedeem implements ICommand {
             Player player = (Player) sender;
             ClawVIPAPI.tryToRedeem(player, args[1]);
         }else{
-            sender.sendMessage(ChatColor.RED + "[ClawVIP] 请先输入序号");
+            sender.sendMessage(BuiltinMessage.getMessage("TYPEREDEEMCODEREMINDER"));
         }
     }
 

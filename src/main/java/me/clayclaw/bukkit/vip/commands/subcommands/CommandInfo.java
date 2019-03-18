@@ -1,5 +1,6 @@
 package me.clayclaw.bukkit.vip.commands.subcommands;
 
+import me.clayclaw.bukkit.vip.BuiltinMessage;
 import me.clayclaw.bukkit.vip.ClawVIP;
 import me.clayclaw.bukkit.vip.commands.ICommand;
 import org.bukkit.ChatColor;
@@ -35,10 +36,9 @@ public class CommandInfo implements ICommand {
     public static List<String> getMessageDescription() {
         return Arrays.asList(new String[]{
                 ChatColor.BLUE + "--------------------------------------",
-                ChatColor.GOLD + "插件名称: " + ClawVIP.getInstance().getDescription().getName(),
-                ChatColor.GOLD + "插件版本: " + ClawVIP.getInstance().getDescription().getVersion(),
-                ChatColor.GOLD + "插件开发人员: ClayClaw",
-                ChatColor.RED + "本插件目前仅於MCBBS免费公开下载。",
+                BuiltinMessage.getMessage("PLUGINNAME") + ClawVIP.getInstance().getDescription().getName(),
+                BuiltinMessage.getMessage("PLUGINVERSION") + ClawVIP.getInstance().getDescription().getVersion(),
+                BuiltinMessage.getMessage("DEVELOPER") + " ClayClaw",
                 ChatColor.BLUE + "--------------------------------------"
         });
     }

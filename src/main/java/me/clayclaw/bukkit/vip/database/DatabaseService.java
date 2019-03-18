@@ -48,7 +48,8 @@ public class DatabaseService implements IService {
 
     enum DatabaseType {
 
-        MYSQL(MySQLDatabase.class);
+        MYSQL(MySQLDatabase.class),
+        YAML(YamlDatabase.class);
 
         Class<? extends IDatabase> targetClass;
 

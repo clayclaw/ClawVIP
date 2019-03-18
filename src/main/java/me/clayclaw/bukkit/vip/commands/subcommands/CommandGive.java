@@ -1,5 +1,6 @@
 package me.clayclaw.bukkit.vip.commands.subcommands;
 
+import me.clayclaw.bukkit.vip.BuiltinMessage;
 import me.clayclaw.bukkit.vip.ClawLib;
 import me.clayclaw.bukkit.vip.ClawVIP;
 import me.clayclaw.bukkit.vip.ClawVIPAPI;
@@ -35,29 +36,31 @@ public class CommandGive implements ICommand {
         if(args.length > 3){
             Player target = Bukkit.getPlayer(args[1]);
             if(target == null || !target.isOnline()){
-                sender.sendMessage(ChatColor.RED + "该玩家不存在或者没有上线");
+                sender.sendMessage(BuiltinMessage.getMessage("NONEXISTPLAYER"));
             }else{
                 String group = args[2];
                 if(!ClawVIP.getConfigOption().getGroupOption().containsKey(group)){
-                    sender.sendMessage(ChatColor.RED + "[ClawVIP] 没有找到相关VIP组");
+                    sender.sendMessage(BuiltinMessage.getMessage("VIPGROUPNOTFOUND"));
                     return;
                 }
                 if(!ClawLib.isNumber(args[3])){
-                    sender.sendMessage(ChatColor.RED + "[ClawVIP] 请输入正确的数字！");
+                    sender.sendMessage(BuiltinMessage.getMessage("ENTERCORRECTNUMBER"));
                     return;
                 }
                 int days = Integer.parseInt(args[3]);
                 if(ClawVIPAPI.giveVIP(target, group, days)){
-                    sender.sendMessage(ChatColor.GOLD + "[ClawVIP] 成功给予玩家 " + ((days == -1) ? "永久" : days+"天")
-                            + " 的VIP （" +
+                    sender.sendMessage(BuiltinMessage.getMessage("SUCCESSFULLYGIVE")
+                            + ((days == -1) ? BuiltinMessage.getMessage("PERMANENT") : days +
+                            BuiltinMessage.getMessage("DAY"))
+                            + " (" +
                             ChatColor.translateAlternateColorCodes('&',
                                     ClawVIP.getConfigOption().getGroupOption().get(group).getFriendlyName()) + ")");
                 }else{
-                    sender.sendMessage(ChatColor.RED + "给予玩家VIP失败，你不能给予玩家更低等级的VIP！");
+                    sender.sendMessage(BuiltinMessage.getMessage("CANNOTGIVELOWTIER"));
                 }
             }
         }else{
-            sender.sendMessage(ChatColor.RED + "[ClawVIP] 请先输入玩家名字、VIP用户组、给予时间(按日计算)");
+            sender.sendMessage(BuiltinMessage.getMessage("GIVECMDREMINDER"));
         }
     }
 

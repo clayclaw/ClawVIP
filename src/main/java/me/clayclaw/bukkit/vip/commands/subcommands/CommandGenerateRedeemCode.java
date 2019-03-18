@@ -1,8 +1,8 @@
 package me.clayclaw.bukkit.vip.commands.subcommands;
 
+import me.clayclaw.bukkit.vip.BuiltinMessage;
 import me.clayclaw.bukkit.vip.ClawVIPAPI;
 import me.clayclaw.bukkit.vip.commands.ICommand;
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
@@ -30,10 +30,11 @@ public class CommandGenerateRedeemCode implements ICommand {
     @Override
     public void trigger(CommandSender sender, String[] args) {
         if (args.length < 2) {
-            sender.sendMessage(ChatColor.RED + "[ClawVIP] 请输入序号设定名称");
+            sender.sendMessage(BuiltinMessage.getMessage("ENTERREDEEMCODENAME"));
             return;
         }
-        sender.sendMessage(ChatColor.GOLD + "[ClawVIP] 成功生成序号: " + ClawVIPAPI.generateRedeemCode(args[1]));
+        sender.sendMessage(BuiltinMessage.getMessage("SUCCESSFULLYREDEEM")
+                + ClawVIPAPI.generateRedeemCode(args[1]));
     }
 
 }

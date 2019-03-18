@@ -1,8 +1,8 @@
 package me.clayclaw.bukkit.vip.commands.subcommands;
 
+import me.clayclaw.bukkit.vip.BuiltinMessage;
 import me.clayclaw.bukkit.vip.ClawVIP;
 import me.clayclaw.bukkit.vip.commands.ICommand;
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
@@ -30,6 +30,7 @@ public class CommandReload implements ICommand {
     @Override
     public void trigger(CommandSender sender, String[] args) {
         ClawVIP.getInstance().initConfig(true);
-        sender.sendMessage(ChatColor.GREEN + "[ClawVIP] 已重新读取设定档");
+        ClawVIP.getInstance().initLanguage();
+        sender.sendMessage(BuiltinMessage.getMessage("RELOADED"));
     }
 }

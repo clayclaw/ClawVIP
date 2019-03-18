@@ -1,11 +1,11 @@
 package me.clayclaw.bukkit.vip;
 
-import com.google.common.collect.Lists;
 import me.clayclaw.bukkit.vip.commands.CommandService;
 import me.clayclaw.bukkit.vip.common.PlayerHandlerService;
 import me.clayclaw.bukkit.vip.common.RedeemCodeService;
 import me.clayclaw.bukkit.vip.bridge.PlaceholderService;
 import me.clayclaw.bukkit.vip.database.DatabaseService;
+import org.bukkit.Bukkit;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,14 +13,25 @@ import java.util.HashMap;
 
 public class ServiceManager {
 
+    private ArrayList<Class<? extends IService>> preInjectServices;
     private static HashMap<Class<? extends IService>, IService> serviceMap;
 
     protected ServiceManager() {}
 
+    private static Class<? extends IService> apply(Services s) {
+        return s.targetClass;
+    }
+
     protected void enable() {
         serviceMap = new HashMap<>();
-        Arrays.stream(Services.values()).forEach(this::accept);
-        serviceMap.values().stream().forEachOrdered(IService::enable);
+
+        Arrays.stream(Services.values()).map(ServiceManager::apply).forEach(this::accept);
+
+        Bukkit.getScheduler().runTaskLater(ClawVIP.getInstance(), () -> {
+            preInjectServices.forEach(this::accept);
+            serviceMap.values().stream().forEachOrdered(IService::enable);
+        }, 1);
+
     }
 
     protected void disable() {
@@ -30,11 +41,17 @@ public class ServiceManager {
                 .forEach(IService::disable);
 
         serviceMap.clear();
+
     }
 
-    private void accept(Services services) {
+    public void destroyService(Class<? extends IService> key){
+        serviceMap.get(key).disable();
+        serviceMap.remove(key);
+    }
+
+    private void accept(Class<? extends IService> targetClass) {
         try {
-            serviceMap.put(services.targetClass, services.targetClass.newInstance());
+            serviceMap.put(targetClass, targetClass.newInstance());
         } catch (InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
         }

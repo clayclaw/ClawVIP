@@ -1,5 +1,6 @@
 package me.clayclaw.bukkit.vip.commands.subcommands;
 
+import me.clayclaw.bukkit.vip.BuiltinMessage;
 import me.clayclaw.bukkit.vip.ClawVIP;
 import me.clayclaw.bukkit.vip.ClawVIPAPI;
 import me.clayclaw.bukkit.vip.commands.ICommand;
@@ -31,7 +32,7 @@ public class CommandList implements ICommand {
 
     @Override
     public void trigger(CommandSender sender, String[] args) {
-        sender.sendMessage(ChatColor.GOLD + "[ClawVIP] 在线VIP列表:");
+        sender.sendMessage(BuiltinMessage.getMessage("ONLINELIST"));
         ClawVIPAPI.getVIPOnline().stream()
                 .map(p -> ChatColor.translateAlternateColorCodes('&',
                         "&6- ["+ ClawVIP.getConfigOption().getGroupOption().get(

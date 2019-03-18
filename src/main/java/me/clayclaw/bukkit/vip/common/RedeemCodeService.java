@@ -1,12 +1,12 @@
 package me.clayclaw.bukkit.vip.common;
 
+import me.clayclaw.bukkit.vip.BuiltinMessage;
 import me.clayclaw.bukkit.vip.ClawVIP;
 import me.clayclaw.bukkit.vip.ConfigOption;
 import me.clayclaw.bukkit.vip.IService;
 import me.clayclaw.bukkit.vip.database.DatabaseService;
 import me.clayclaw.bukkit.vip.database.pojo.DatabaseKeyDataPOJO;
 import org.apache.commons.lang.RandomStringUtils;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.util.Objects;
@@ -42,19 +42,19 @@ public class RedeemCodeService implements IService {
                 (DatabaseKeyDataPOJO) dbService.getDatabase().extractData(DatabaseKeyDataPOJO.class, key);
 
         if(Objects.isNull(pojo)) {
-            player.sendMessage(ChatColor.RED + "[ClawVIP] 使用序号失败，没有找到相关序号");
+            player.sendMessage(BuiltinMessage.getMessage("REDEEMCODENOTFOUND"));
             return;
         }
 
         if(!ClawVIP.getConfigOption().getKeyOption().containsKey(pojo.getKeyGroup())){
-            player.sendMessage(ChatColor.RED + "[ClawVIP] 使用序号失败，此序号没有找到相关序号设定");
+            player.sendMessage(BuiltinMessage.getMessage("REDEEMCODESETTINGSNOTFOUND"));
             return;
         }
 
         ConfigOption.KeyOption ko = ClawVIP.getConfigOption().getKeyOption().get(pojo.getKeyGroup());
         String targetGroup = ko.getVipGroup();
         if(!ClawVIP.getConfigOption().getGroupOption().containsKey(targetGroup)){
-            player.sendMessage(ChatColor.RED + "[ClawVIP] 使用序号失败，此序号没有找到相关VIP组");
+            player.sendMessage(BuiltinMessage.getMessage("REDEEMCODEVIPGROUPNOTFOUND"));
             return;
         }
 
