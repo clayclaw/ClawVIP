@@ -22,8 +22,8 @@ public enum BuiltinMessage {
     ZH_TW_STRLISTNOTFOUND("&c語言文件缺漏字串列"),
     ZH_CN_STRLISTNOTFOUND("&c语言文件缺漏字串列: "),
 
-    ZH_TW_NO("無"),
-    ZH_CN_NO("无"),
+    ZH_TW_NO(""),
+    ZH_CN_NO(""),
 
     ZH_TW_ENTERREDEEMCODENAME("&c[ClawVIP] 請輸入序號設定名稱"),
     ZH_CN_ENTERREDEEMCODENAME("&c[ClawVIP] 请输入序号设定名称"),
@@ -105,7 +105,11 @@ public enum BuiltinMessage {
 
     ZH_TW_CONVERTERROR("&c轉換時發生錯誤 ID:"),
     ZH_CN_COVERTERROR("&c转换时发生错误 ID:"),
-    EN_US_CONVERTERROR("&cConvert Error, ID:");
+    EN_US_CONVERTERROR("&cConvert Error, ID:"),
+
+    ZH_TW_PLACEHOLDERINJECTSUCCESS("&6[ClawVIP] PlaceholderAPI成功載入變量"),
+    ZH_CN_PLACEHOLDERINJECTSUCCESS("&6[ClawVIP] PlaceholderAPI成功载入变量"),
+    EN_US_PLACEHOLDERINJECTSUCCESS("&6[ClawVIP] PlaceholderAPI successfully registered variables");
 
     String message;
     BuiltinMessage(String s){
@@ -115,8 +119,9 @@ public enum BuiltinMessage {
     public String getMsg(){ return message; }
 
     public static String getMessage(String id){
-        return ChatColor.translateAlternateColorCodes('&',
-                BuiltinMessage.valueOf(ClawVIP.language.toUpperCase() + "_" + id.toUpperCase()).getMsg());
+        return (BuiltinMessage.valueOf(ClawVIP.language.toUpperCase() + "_" + id.toUpperCase()).getMsg() != null)
+                ? ChatColor.translateAlternateColorCodes('&', BuiltinMessage.valueOf(ClawVIP.language.toUpperCase() + "_" + id.toUpperCase()).getMsg())
+                : ClawVIP.language.toUpperCase() + "_" + id.toUpperCase() + " Missing";
     }
 
 }

@@ -60,6 +60,8 @@ public class PlayerHandlerService implements IService {
     public boolean updateVIP(Player player, String targetGroup, boolean isPermanent, int dayAmount){
 
         VIPlayer vp = getVIPlayer(player);
+        removeVIP(vp);
+
         ConfigOption.VIPGroupOption go = ClawVIP.getConfigOption().getGroupOption().get(targetGroup);
 
         vp.setOriginalGroup((!Objects.isNull(ClawVIP.getConfigOption().getVipGroupPlaceholder()) ?
@@ -90,9 +92,10 @@ public class PlayerHandlerService implements IService {
         }
 
         if(go.isMoveGroup()){
-            String moveGroup = ClawLib.replaceIfExists(ClawLib.replaceIfExists(
-                    ClawVIP.getConfigOption().getVipCmdMoveGroup(),
-                    "%player%", vp.getPlayer().getName()),
+            String moveGroup = ClawLib.replaceIfExists(
+                    ClawLib.replaceIfExists(
+                            ClawVIP.getConfigOption().getVipCmdMoveGroup(),
+                            "%player%", vp.getPlayer().getName()),
                     "%group%", go.getPermGroup());
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), moveGroup);
         }

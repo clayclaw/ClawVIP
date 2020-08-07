@@ -36,7 +36,7 @@ VIP:
   Group:
     VIP1:
       FriendlyName: '&6尊贵玩家1级'
-      MovePermGroup: true
+      MoveGroup: true
       PermGroup: 'vip1'
       ExtraPerm:
         - vip.fly
@@ -44,7 +44,7 @@ VIP:
       Priority: 0
     VIP2:
       FriendlyName: '&6尊贵玩家2级'
-      MovePermGroup: true
+      MoveGroup: true
       PermGroup: 'vip2'
       ExtraPerm:
         - vip.fly

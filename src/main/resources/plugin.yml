@@ -1,6 +1,6 @@
 name: ClawVIP
 main: me.clayclaw.bukkit.vip.ClawVIP
-version: 1.21
+version: 1.28-Beta
 author: ClayClaw
 softdepend: [PlaceholderAPI]
 commands:

@@ -41,6 +41,8 @@ public class PlaceholderService implements IService {
         addPlaceholder("group", p -> (playerService.getVIPlayer(p).getGroupName() != null)
                 ? playerService.getVIPlayer(p).getGroupName() : BuiltinMessage.getMessage("NO"));
         new PlaceholderServiceExpansion().register();
+        Bukkit.getServer().getLogger().info(BuiltinMessage.getMessage("PLACEHOLDERINJECTSUCCESS"));
+
     }
 
     public static String getPAPIConvertedString(String s, Player p) {

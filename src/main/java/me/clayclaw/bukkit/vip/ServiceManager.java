@@ -23,6 +23,7 @@ public class ServiceManager {
     }
 
     protected void enable() {
+        preInjectServices = new ArrayList<>();
         serviceMap = new HashMap<>();
 
         Arrays.stream(Services.values()).map(ServiceManager::apply).forEach(this::accept);

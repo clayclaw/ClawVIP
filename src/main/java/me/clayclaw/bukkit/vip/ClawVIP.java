@@ -103,8 +103,8 @@ public class ClawVIP extends JavaPlugin {
             }else if(configOption.getLanguage().equalsIgnoreCase("zh_TW")) {
                 loadLangConfig("zh_TW", reload);
                 getServer().getLogger().info(BuiltinMessage.getMessage("CREATELANGFILE") + " zh_TW");
-            }else if(configOption.getLanguage().equalsIgnoreCase("en_US")){
-                loadLangConfig("zh_TW", reload);
+            } else if(configOption.getLanguage().equalsIgnoreCase("en_US")){
+                loadLangConfig("en_US", reload);
                 getServer().getLogger().info(BuiltinMessage.getMessage("CREATELANGFILE") + " en_US");
             }else{
                 getServer().getLogger().severe(BuiltinMessage.getMessage("FILENOTFOUND")

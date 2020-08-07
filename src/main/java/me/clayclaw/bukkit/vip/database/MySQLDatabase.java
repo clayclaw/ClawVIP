@@ -14,6 +14,11 @@ public class MySQLDatabase implements IDatabase {
 
     @Override
     public void enable() {
+        tryConnect();
+        tryCreateTables();
+    }
+
+    private Connection tryConnect() {
         if (!isConnected()) {
             String host = ClawVIP.getConfigOption().getMySQLHost();
             String port = ClawVIP.getConfigOption().getMySQLPort();
@@ -21,14 +26,18 @@ public class MySQLDatabase implements IDatabase {
             String username = ClawVIP.getConfigOption().getMySQLUsername();
             String password = ClawVIP.getConfigOption().getMySQLPassword();
             try {
-                connection = DriverManager.getConnection(
-                        "jdbc:mysql://" + host + ":" + port + "/" + database, username, password);
                 Bukkit.getLogger().info(BuiltinMessage.getMessage("CONNECTINGTOMYSQL"));
+                return connection = DriverManager.getConnection(
+                        "jdbc:mysql://" + host + ":" + port + "/" + database, username, password);
             } catch (SQLException e) {
                 // e.printStackTrace();
                 Bukkit.getLogger().warning(BuiltinMessage.getMessage("CONNECTFAILED"));
             }
         }
+        return null;
+    }
+
+    private void tryCreateTables() {
         Bukkit.getScheduler().runTaskLater(ClawVIP.getInstance(), () -> {
             if(!isConnected()) return;
             try {
@@ -47,7 +56,6 @@ public class MySQLDatabase implements IDatabase {
                 e.printStackTrace();
             }
         }, 1);
-
     }
 
     @Override
@@ -170,6 +178,6 @@ public class MySQLDatabase implements IDatabase {
     }
 
     public Connection getConnection() {
-        return connection;
+        return (isConnected()) ? connection : tryConnect();
     }
 }
